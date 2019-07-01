@@ -1,0 +1,44 @@
+// 替换iview的样式
+// CheckBox
+.ivu-checkbox-checked
+    .ivu-checkbox-inner
+        border-color $btnColor !important
+        background-color $btnColor !important
+// 提示
+.ivu-badge-count
+    top 6px !important
+    right 16px !important
+    padding 0 4px !important
+    height 14px !important
+    line-height 12px !important
+// 表格
+#home
+    .ivu-table th
+        background-color $tabhead !important
+        color $white
+    .ivu-table td, .ivu-table th, .ivu-table-wrapper
+        border 0 !important
+    .ivu-table td, .ivu-table th
+        height 35px !important
+        border-right 2px solid #eee !important
+        &:last-child
+            border 0 !important
+    .ivu-table:after, .ivu-table:before
+        background-color transparent !important
+    // 时间轴
+    .ivu-timeline-item-head
+        border 3px solid $tabhead !important
+    .ivu-timeline-item-tail
+        border-left 2px solid $tabhead !important
+    // 侧边栏导航
+    .ivu-menu
+        color $titleCol !important
+    .ivu-menu-vertical .ivu-menu-item:hover, .ivu-menu-vertical .ivu-menu-submenu-title:hover
+        color $titleCol !important
+    .ivu-menu-light
+        .ivu-menu-item-active:not(.ivu-menu-submenu)
+            color $titleCol
+            background $white
+    .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu):after
+        background transparent
+        

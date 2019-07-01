@@ -1,0 +1,13 @@
+@import './variable.styl'
+// 背景图
+bgImg(url, type)
+  background url(url) no-repeat center center
+  background-size type
+// 定位
+positCenter(left, top, bottom, right, x, y)
+  position absolute
+  left left
+  top top
+  bottom bottom
+  right right
+  transform translate(x, y)
