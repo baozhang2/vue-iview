@@ -34,6 +34,7 @@ module.exports = {
             "no-multiple-empty-lines": [0, { "max": 100 }],
             "no-mixed-spaces-and-tabs": 0
         }],
+        "vue/no-parsing-error": [2,{ "x-invalid-end-tag": false }],
         "space-before-blocks": 0,
         "indent": 0,//缩进风格
         "no-tabs": 0

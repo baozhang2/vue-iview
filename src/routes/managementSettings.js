@@ -14,7 +14,7 @@ export default {
     children: [
         {
             path: '/managementSettings/organizationManagement',
-            name:'organizationManagement',
+            name:'manorganizationManagement',
             component: () => import('../views/managementSettings/organizationManagement/organizationManagement.vue'),
             meta: {
                 title: '组织管理'

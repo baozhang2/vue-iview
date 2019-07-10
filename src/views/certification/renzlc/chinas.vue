@@ -1,8 +1,12 @@
 <template>
   <div id="desction" class="container">
     <!-- 展示 -->
-    <div v-if="descEdit">
-      <div class="desc-contents" v-if="!collegeList.collegeDescribe">暂无描述</div>
+    <div v-if="descEdit" style="position:relative;">
+      <Spin fix v-if="spinShow">
+        <Icon type="ios-loading" size=18 class="demo-spin-icon-load" style="animation: ani-demo-spin 1s linear infinite;"></Icon>
+        <div>Loading</div>
+      </Spin>
+      <div class="desc-contents" v-if="!collegeDescribe">暂无描述</div>
       <div class="desc-contents" v-else v-html="collegeDescribe"></div>
       <div class="edit-desc">
         <Button type="error" @click="descChanged">编辑</Button>
@@ -22,52 +26,64 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { collegebyId, collegeDesc } from "api";
 import { msg } from "utils/js/utils";
 import { setTimeout } from "timers";
 export default {
   name: "desction",
   data() {
     return {
-      collegeDescribe: '英语（English）是印欧语系-日耳曼语族下的语言，由26个字母组成，英文字母渊源于拉丁字母，拉丁字母渊源于希腊字母，而希腊字母则是由腓尼基字母演变而来的。英语是国际指定的官方语言（作为母语），也是世界上使用最广泛的语言，英语包含约49万词，外加技术名词约30万个，是词汇最多的语言，也是欧',
+      spinShow: false,
+      collegeDescribe: '',
       college: {},
-      descTitle: "描述",
       descEdit: true,
       describe: "",
       reDescribe: ""
     };
   },
   computed: {
-    ...mapGetters({
-      collegeList: "collegeList"
-    })
   },
   methods: {
+     query(){
+            this.spinShow = true;
+            this.$post('/certificationStandards/getCertificationStandards', {}).then(
+                result => {
+                  if (result.code == '100'){
+                    this.spinShow = false;
+                    this.collegeDescribe = result.data.standardContentChinese
+                  } else {
+                    this.spinShow = false;
+                  }
+                }
+            )
+        },
     // 编辑按钮
     descChanged() {
+      this.reDescribe = JSON.parse(JSON.stringify(this.collegeDescribe))
       this.descEdit = false;
-      this.reDescribe = JSON.parse(JSON.stringify(this.collegeList.collegeDescribe)); // 拷贝一份防止用户取消双相绑定改变
     },
     // 取消编辑
     cancelEdit() {
       this.descEdit = true;
-      this.descTitle = "描述";
-      this.collegeList.collegeDescribe = this.reDescribe; // 用户取消后给数据赋值
     },
     // 提交编辑描述的表单
     submitDesc() {
       this.descEdit = true;
-      this.descTitle = "描述";
-
+      this.$post('certificationStandards/updateCertificationStandards', {
+      }).then(
+        result => {
+        }
+      )
       // 编辑描述的
-      this.$post('', {
-        describe: this.collegeList.collegeDescribe,
-        id: this.collegeList.id
-      }).then(res => {
-        msg(this, "success", "编辑成功");
-      });
+      // this.$post('', {
+      //   describe: this.collegeList.collegeDescribe,
+      //   id: this.collegeList.id
+      // }).then(res => {
+      //   msg(this, "success", "编辑成功");
+      // });
     }
+  },
+  mounted(){
+    this.query()
   }
 };
 </script>

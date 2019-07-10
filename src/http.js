@@ -2,10 +2,11 @@ import axios from 'axios'
 import iView from 'iview';
 
 axios.defaults.baseURL = 'http://localhost:8080/api'
+// axios.defaults.baseURL = 'http://rz.talkingcake.cn/api'
 // 请求拦截器
 axios.interceptors.request.use(config => {
   // 如果有token 那么我们要带上token请求
-  if (localStorage.token) {
+  if (localStorage.accessToken) {
     config.headers.accessToken = localStorage.accessToken;
   }
 

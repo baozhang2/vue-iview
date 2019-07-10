@@ -14,7 +14,9 @@ import echarts from 'utils/js/echarts'
 // resetcss
 import '@/utils/styl/reset.styl'
 import '@/fonts/iconfont.css'
+import modal from './components/modal/index';
 
+Vue.use(modal)
 Vue.use(iView);
 Vue.config.productionTip = false
 Vue.prototype.$get = $get

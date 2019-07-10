@@ -7,8 +7,7 @@
                     <button class="beauty">培养愿景</button>
                     <button class="edit" @click="edit">编辑</button>
                 </div>
-                <p class="content">
-                    长江商学院企业家学者项目（DBA）课程是长江商学院的学位项目。作为商学院教育的新十年创新之作，长江商学院企业家学者项目（DBA）的愿景是成就转型时期新商业文明的思想者和引领者。长江商学院企业家学者项目（DBA）整合全球优质教育资源，深刻洞察全球经济转型与发展，大势与规律，以定制化专题研究系列和实践案例为载体，打造极具前沿性和系统性课程体系，创建知识众筹平台和教学相长的学习生态。长江商学院企业家学者项目（DBA）汇聚中国极具使命感、极有进取精神和匠人精神的产业领袖，带课题进项目，从管理迷思和商业挑战切入，通过深度反思、跨界融合和实践创新，构建框架思考体系，提炼和传承中国管理思想。长江商学院企业家学者项目（DBA）课程是长江商学院的学位项目。作为商学院教育的新十年创新之作，长江商学院企业家学者项目（DBA）的愿景是成就转型时期新商业文明的思想者和引领者。长江商学院企业家学者项目（DBA）整合全球优质教育资源，深刻洞察全球经济转型与发展，大势与规律，以定制化专题研究系列和实践案例为载体，打造极具前沿性和系统性课程体系，创建知识众筹平台和教学相长的学习生态。长江商学院企业家学者项目（DBA）汇聚中国极具使命感、极有进取精神和匠人精神的产业领袖，带课题进项目，从管理迷思和商业挑战切入，通过深度反思、跨界融合和实践创新，构建框架思考体系，提炼和传承中国管理思想。长江商学院企业家学者项目（DBA）课程是长江商学院的学位项目。作为商学院教育的新十年创新之作，长江商学院企业家学者项目（DBA）的愿景是成就转型时期新商业文明的思想者和引领者。长江商学院企业家学者项目（DBA）整合全球优质教育资源，深刻洞察全球经济转型与发展，大势与规律，以定制化专题研究系列和实践案例为载体，打造极具前沿性和系统性课程体系，创建知识众筹平台和教学相长的学习生态。长江商学院企业家学者项目（DBA）汇聚中国极具使命感、极有进取精神和匠人精神的产业领袖，带课题进项目，从管理迷思和商业挑战切入，通过深度反思、跨界融合和实践创新，构建框架思考体系，提炼和传承中国管理思想。
+                <p class="content" v-html="collegeList.collegeDescribe">
                 </p>
             </div>
             <div class="mg_t">
@@ -16,16 +15,15 @@
                     <button class="beauty">培养愿景</button>
                     <button class="edit" @click="edit">编辑</button>
                 </div>
-                <p class="content">
-                    长江商学院企业家学者项目（DBA）课程是长江商学院的学位项目。作为商学院教育的新十年创新之作，长江商学院企业家学者项目（DBA）的愿景是成就转型时期新商业文明的思想者和引领者。长江商学院企业家学者项目（DBA）整合全球优质教育资源，深刻洞察全球经济转型与发展，大势与规律，以定制化专题研究系列和实践案例为载体，打造极具前沿性和系统性课程体系，创建知识众筹平台和教学相长的学习生态。长江商学院企业家学者项目（DBA）汇聚中国极具使命感、极有进取精神和匠人精神的产业领袖，带课题进项目，从管理迷思和商业挑战切入，通过深度反思、跨界融合和实践创新，构建框架思考体系，提炼和传承中国管理思想。长江商学院企业家学者项目（DBA）课程是长江商学院的学位项目。作为商学院教育的新十年创新之作，长江商学院企业家学者项目（DBA）的愿景是成就转型时期新商业文明的思想者和引领者。长江商学院企业家学者项目（DBA）整合全球优质教育资源，深刻洞察全球经济转型与发展，大势与规律，以定制化专题研究系列和实践案例为载体，打造极具前沿性和系统性课程体系，创建知识众筹平台和教学相长的学习生态。长江商学院企业家学者项目（DBA）汇聚中国极具使命感、极有进取精神和匠人精神的产业领袖，带课题进项目，从管理迷思和商业挑战切入，通过深度反思、跨界融合和实践创新，构建框架思考体系，提炼和传承中国管理思想。长江商学院企业家学者项目（DBA）课程是长江商学院的学位项目。作为商学院教育的新十年创新之作，长江商学院企业家学者项目（DBA）的愿景是成就转型时期新商业文明的思想者和引领者。长江商学院企业家学者项目（DBA）整合全球优质教育资源，深刻洞察全球经济转型与发展，大势与规律，以定制化专题研究系列和实践案例为载体，打造极具前沿性和系统性课程体系，创建知识众筹平台和教学相长的学习生态。长江商学院企业家学者项目（DBA）汇聚中国极具使命感、极有进取精神和匠人精神的产业领袖，带课题进项目，从管理迷思和商业挑战切入，通过深度反思、跨界融合和实践创新，构建框架思考体系，提炼和传承中国管理思想。
+                <p class="content" v-html="collegeList.collegeDescribe">
                 </p>
             </div>
             <div class="mg_t">
                 <div class="line">
                     <button class="beauty">培养目标</button>
                     <div>
-                        <button class="add" >+添加</button>
-                        <button class="scanRep" >查看报告</button>
+                        <button class="add" @click="addTrainObj">+添加</button>
+                        <button class="scanRep" @click="scanRep">查看报告</button>
                     </div>
                 </div>
                 <div class="language">
@@ -38,11 +36,11 @@
                 </div>
                 <div class="reportList" v-for="(item,key) in 3" :key="key">
                     <div class="left">
-                        <a class="reportName">
+                        <div class="reportName">
                             培养计算高级人才
-                            <i class="edit"></i>
-                            <i class="del"></i>
-                        </a>
+                            <i class="edit" @click="modify"></i>
+                            <i class="del" @click="delModal = true"></i>
+                        </div>
                         <div class="intrdu">
                             培养一批计算机的高级人才，为社会主义现代化做建设
                         </div>
@@ -51,7 +49,7 @@
                         查看报告
                     </div>
                 </div>
-                <button class="bottomCopy">复制</button>
+                <button class="bottomCopy" @click="copy">复制</button>
             </div>
         </div>
         <div v-if="false">
@@ -63,18 +61,97 @@
                 <button class="btn2" @click="create">创建</button>
             </div>
         </div>
+        <modal
+            title="复制成果"
+            :content='modalContent'
+            @on-confirm='confirm'
+            @on-close='close'
+            @on-cancel='cancel'
+            @on-change='change'
+            :confirmText='confirmText'
+            :cancleText='cancleText'
+            v-show='showModal'>
+        </modal>
+        <delModal
+            title="是否删除该数据？"
+            :content="content"
+            @on-confirm="confirm1"
+            @on-close="close1"
+            @on-cancel="cancel1"
+            v-show="delModal"
+        ></delModal>
     </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
+    data () {
+    return {
+        delModal:false,
+        content:'删除数据将无法恢复',
+      modalContent: '请点击窗口右上角发送到好友或朋友圈来赠送给好友',
+      showModal: false,
+      cancleText: '复制',
+      confirmText: '创建'
+    }
+  },
     methods: {
+        confirm1() {
+            this.delModal = false;
+            console.log('111');
+        },
+        close1() {
+            this.delModal = false;
+        },
+        cancel1() {
+            /* 确认删除执行的方法 */
+            this.delModal = false;
+        },
+        change (data) {
+            console.log(data)
+        },
         create () {
         },
         copy () {
+            this.showModal = true
+        },
+        cancel () {
+            this.showModal = true
+        },
+        confirm () {
+        },
+        close () {
+            this.showModal = false
+        },
+        modify () {
+           this.$router.push({
+                path:'/achievements/addTrainObj',
+                query: {
+                    type: 'modify'
+                }
+            })
         },
         edit () {
+            this.$router.push({
+                path:'/achievements/desc'
+            })
+        },
+        addTrainObj () {
+           this.$router.push({
+                path:'/achievements/addTrainObj'
+           })
+        },
+        scanRep () {
+            this.$router.push({
+                path:'/achievements/viewResult'
+           })
         }
+    },
+    computed: {
+        ...mapGetters({
+        collegeList: "collegeList"
+        })
     }
 }
 </script>
@@ -117,6 +194,7 @@ export default {
                 border-radius 4px
                 font-size $font14
                 line-height 30px
+                cursor pointer
             .add
                 width:60px;
                 height:30px;
@@ -126,6 +204,7 @@ export default {
                 color #fff;
                 line-height 30px
                 margin-right 30px
+                cursor pointer
             .scanRep
                 width:90px;
                 height:30px;
@@ -134,6 +213,7 @@ export default {
                 font-size $font14;
                 color:rgba(255,255,255,1);
                 line-height 30px;
+                cursor pointer
         .language
             margin 30px 0 5px 0
             display flex
@@ -143,6 +223,7 @@ export default {
                 line-height 36px
                 text-align center
                 font-size $font14
+                cursor pointer
             .chinese
                 background:rgba(175,78,150,1);
                 margin-right 1px
@@ -174,6 +255,7 @@ export default {
                         display inline-block
                         width 12px
                         height 12px
+                        cursor pointer
                     .edit
                         bgImg('../../../assets/img/edit.png', cover)
                         margin-left 26px
@@ -190,6 +272,7 @@ export default {
                 font-size $font14
                 font-weight:500;
                 color:rgba(108,131,180,1);
+                cursor pointer
         .bottomCopy
             width:60px;
             line-height:30px;
@@ -198,17 +281,19 @@ export default {
             color #fff
             font-size $font14
             margin-top 22px
+            cursor pointer
   .btn
     width 300px;
     margin 0 auto;
     button
-        width 84px;
+        padding 1px 20px;
         background:rgba(255,255,255,1);
         border:1px solid rgba(108,131,180,1);
         border-radius:4px;
         font-size $font16
         font-weight:500;
         line-height:38px;
+        cursor pointer
     .btn1
         background #fff
         color rgba(108,131,180,1)

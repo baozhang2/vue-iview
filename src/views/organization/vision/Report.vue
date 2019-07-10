@@ -12,11 +12,30 @@
     <div class="addAndEdit" v-else>
       <!-- 添加/编辑区 -->
       <div class="cont">
-        <span class="lable">报告名称:</span>
-        <input class="input" v-model="data1.number" type="text">
+        <span class="lable">文件名称:</span>
+        <input class="input" v-model="report.name" type="text">
         <br>
+        <span class="lable">学年:</span>
+        <Select v-model="modelSelect" style="width:200px;margin-left: 32px;">
+          <Option
+            v-for="item in cityList"
+            :value="item.value"
+            :key="item.value"
+          >{{ item.label }}</Option>
+        </Select>
+        <br />
+        <br />
+        <span class="lable">文件类别:</span>
+        <Select v-model="modelSelect1" style="width:200px">
+          <Option
+            v-for="item in cityList"
+            :value="item.value"
+            :key="item.value"
+          >{{ item.label }}</Option>
+        </Select>
+        <br />
         <span class="lable">上传文件:</span>
-        <input class="file" v-model="data1.number" type="text">
+        <input class="file" v-model="report.file" type="text">
         <button class="file_btn">选择文件</button>
         <input type="file" class="hide">
         <!-- 按钮盒子 -->
@@ -34,6 +53,22 @@ export default {
   data() {
     return {
       showTable: true,
+      modelSelect: '',
+      modelSelect1: '',
+      report: {
+        name: '',
+        file: ''
+      },
+      cityList: [
+        {
+          value: "New York",
+          label: "New York"
+        },
+        {
+          value: "London",
+          label: "London"
+        }
+      ],
       columns1: [
         {
           title: "编号",
@@ -132,6 +167,9 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    submits () {}
   }
 };
 </script>

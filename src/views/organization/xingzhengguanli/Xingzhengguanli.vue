@@ -7,8 +7,8 @@
       </li>
     </ul>
     <div class="top" v-if="showTable">
-      <button class="file_btn">上传文件</button>
-      <input type="file" class="hide">
+      <button class="file_btn" @click="showTable = false">上传文件</button>
+      <!-- <input type="file" class="hide"> -->
       <div class="add_btn fr clearfix" @click="showTable = false">查询</div>
       <input type="text" class="Inquire fr clearfix" placeholder="请输入关键字">
     </div>
@@ -16,13 +16,56 @@
     <div class="tab" v-if="showTable">
       <Table :columns="columns1" :data="data1"></Table>
     </div>
+    <div class="addAndEdit" v-else>
+      <!-- 添加/编辑区 -->
+      <div class="cont">
+        <span class="lable">文件名称:</span>
+        <input class="input" v-model="report.name" type="text">
+        <br>
+        <span class="lable">学年:</span>
+        <Select v-model="modelSelect" style="width:200px;margin-left: 32px;">
+          <Option
+            v-for="item in cityList"
+            :value="item.value"
+            :key="item.value"
+          >{{ item.label }}</Option>
+        </Select>
+        <br />
+        <br />
+        <span class="lable">文件类别:</span>
+        <Select v-model="modelSelect1" style="width:200px">
+          <Option
+            v-for="item in cityList"
+            :value="item.value"
+            :key="item.value"
+          >{{ item.label }}</Option>
+        </Select>
+        <br />
+        <span class="lable">上传文件:</span>
+        <input class="file" v-model="report.file" type="text">
+        <button class="file_btn">选择文件</button>
+        <input type="file" class="hide">
+        <!-- 按钮盒子 -->
+        <div class="edit-desc">
+          <Button type="success" ghost @click="showTable=true">取消</Button>
+          <Button type="success" class="submit" @click="submits">完成</Button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   data() {
+    let self = this
     return {
+      report: {
+        name: '',
+        file: ''
+      },
+      modelSelect: '',
+      modelSelect1: '',
       visionList: [
         {
           name: "政策报告",
@@ -34,6 +77,16 @@ export default {
         }
       ],
       showTable: true,
+      cityList: [
+        {
+          value: "New York",
+          label: "New York"
+        },
+        {
+          value: "London",
+          label: "London"
+        }
+      ],
       columns1: [
         {
           title: "编号",
@@ -145,6 +198,9 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    submits () {}
   }
 };
 </script>
@@ -207,10 +263,6 @@ export default {
       color: #FFFFFF
       margin: 27px 0 7px
   .addAndEdit
-    h4
-      font-weight: bold
-      font-size: $font16
-      margin-bottom: 17px
     .cont
       background: #FAFAFA
       padding-top: 40px
@@ -225,9 +277,29 @@ export default {
         padding: 5px 25px
         border: 1px solid $eee
         margin: 10px 0 10px
+      .file
+        font-size: $font14
+        width: 286px
+        background-color: #FFFFFF
+        box-sizing: border-box
+        padding: 5px 25px
+        border: 1px solid $eee
+        margin: 10px 0 10px
+      .hide
+        position: relative
+        right: 122px
+        opacity: 0
+        z-index: 50
+        width: 122px
+        height: 33px
+      .file_btn
+        width: 122px
+        height: 33px
+        background: #6FB3E0
+        margin-left: 12px
       .edit-desc
         margin-left: 66px
-        margin-top: 111px
+        margin-top: 51px
         padding-bottom: 65px
       .submit
         margin-left: 28px

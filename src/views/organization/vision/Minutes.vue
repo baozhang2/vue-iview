@@ -169,8 +169,9 @@ export default {
   methods: {
     cancel() {
       this.showTable = true;
+    },
+    submits () {}
     }
-  }
 };
 </script>
 

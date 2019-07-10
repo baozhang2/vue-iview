@@ -11,27 +11,9 @@
 
       <!-- list导航 -->
       <ul class="nav-list">
-        <!-- 学院 -->
-        <li
-          class="college"
-          v-for="(item,index) in collegeListsArr"
-          :key="index"
-          :title="item.collegeName"
-          @click="selectList($event, index, item)"
-        >
+        <li v-for="(item, index) in navItemList" :key="index">
           <Icon type="md-star" size="20" color="#AF4E96" />
-          {{item.collegeName}}
-          <i class="arrowDown" ref="rotateDom">
-            <Icon type="ios-arrow-down" />
-          </i>
-          <ul class="major" ref="major">
-            <!-- 专业 -->
-            <li
-              v-for="(data, key) in item.specialtyLists"
-              :key="key"
-              :title="data.fullName"
-            >{{data.shortenedName}}</li>
-          </ul>
+          <router-link :to="item.path">{{item.name}}</router-link>
         </li>
       </ul>
       <!-- 成果菜单 -->
@@ -44,8 +26,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { collegeList, specialtyList } from "api";
-import { Promise, reject } from "q";
 export default {
   name: "sidebar",
   data() {
@@ -74,60 +54,44 @@ export default {
         }
       ],
       collegeListsArr: [],
-      isResult: false
-    };
-  },
-  methods: {
-    // 获取学院和专业 ---> 由于数据结构比较恶心 我只能拓展js的原型对象，向原型对象添加方法
-    getxueyuan() {
-      this.$get(collegeList).then(({ data }) => {
-          this.$get(specialtyList, { collegeId: data[0].id })
-            .then(({ data: getArr }) => {
-              data[0].specialtyLists = getArr;
-              this.collegeListsArr.push(data[0]);
-            })
-            .then(res => {
-              // 触发默认描述
-              this.$store.commit("COLLEFELIST", this.collegeListsArr[0]);
-            });
-      });
-    },
-    // 自定义下拉的效果
-    selectList({ target }, index, item) {
-      // 触发vuex 改变描述等
-      this.$store.commit("COLLEFELIST", item); // 设置vuex
-
-      // 下拉效果
-      let len = this.$refs.major[index].children.length;
-      if (len > 0) {
-        if (
-          this.$refs.major[index].id == "active" &&
-          target.className == "college"
-        ) {
-          this.$refs.major[index].style.height = `0px`;
-          this.$refs.major[index].id = "";
-          this.$refs.rotateDom[index].style.transform = `rotate(0deg)`;
-          return false;
+      isResult: false,
+      navItemList: [
+        {
+          name: "组织管理",
+          path: "/managementSettings/organizationManagement"
+        },
+        {
+          name: "系统通知",
+          path: "/managementSettings/systemNotification"
+        },
+        {
+          name: "认证设置",
+          path: "/managementSettings/authenticationSettings"
+        },
+        {
+          name: "人员管理",
+          path: "/managementSettings/personnelManagement"
+        },
+        {
+          name: "权限管理",
+          path: "/managementSettings/authorityManagement"
+        },
+        {
+          name: "系统日志",
+          path: "/managementSettings/systemLog"
+        },
+        {
+          name: "系统设置",
+          path: "/managementSettings/systemSettings"
         }
-        this.$refs.major[index].style.height = `${len * 49}px`;
-        this.$refs.major[index].id = "active";
-        this.$refs.rotateDom[index].style.transform = `rotate(180deg)`;
-      }
-    }
+      ]
+    };
   },
   computed: {
     ...mapGetters({
       sideBarShow: "sideBarShow",
       routerPath: "routerPath"
     })
-  },
-  updated() {
-    this.routerPath == "/achievements"
-      ? (this.isResult = true)
-      : (this.isResult = false);
-  },
-  mounted() {
-    this.getxueyuan();
   }
 };
 </script>
@@ -148,32 +112,21 @@ export default {
     .nav-list {
       border-bottom: 1px solid $eee;
 
-      .major {
-        height: 0;
-        transition: all 0.3s;
-      }
-
-      .college, .major li {
+      li {
         box-sizing: border-box;
         padding: 0px 16px;
         line-height: 43px;
-        border-top: 1px solid $eee;
+        border-top: 1px solid #eee;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         cursor: pointer;
         vertical-align: sub;
 
-        &:hover {
-          background-color: $white;
-          transition: all 0.2s ease-in-out;
+        a {
+          color: #000;
+          margin-left: 7px;
         }
-      }
-
-      .arrowDown {
-        position: absolute;
-        right: 15px;
-        transition: all 0.3s;
       }
     }
   }

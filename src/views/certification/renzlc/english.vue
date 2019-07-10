@@ -1,8 +1,12 @@
 <template>
   <div id="desction" class="container">
     <!-- 展示 -->
-    <div v-if="descEdit">
-      <div class="desc-contents" v-if="!collegeList.collegeDescribe">暂无描述</div>
+    <div v-if="descEdit" style="position:relative;">
+      <Spin fix v-if="spinShow">
+        <Icon type="ios-loading" size=18 class="demo-spin-icon-load" style="animation: ani-demo-spin 1s linear infinite;"></Icon>
+        <div>Loading</div>
+      </Spin>
+      <div class="desc-contents" v-if="!collegeDescribe">暂无描述</div>
       <div class="desc-contents" v-else v-html="collegeDescribe"></div>
       <div class="edit-desc">
         <Button type="error" @click="descChanged">编辑</Button>
@@ -22,15 +26,14 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { collegebyId, collegeDesc } from "api";
 import { msg } from "utils/js/utils";
 import { setTimeout } from "timers";
 export default {
   name: "desction",
   data() {
     return {
-      collegeDescribe: 'Chinese President Xi Jinping here on Friday called on the Group of 20 (G20) major economies to explore driving force for growth, improve global governance, remove development bottlenecks, and properly address differences.',
+      spinShow: false,
+      collegeDescribe: '',
       college: {},
       descTitle: "描述",
       descEdit: true,
@@ -39,35 +42,44 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      collegeList: "collegeList"
-    })
   },
   methods: {
+    query(){
+        this.spinShow = true;
+        this.$post('/certificationStandards/getCertificationStandards', {}).then(
+            result => {
+              console.log('dsadasd', result)
+              if (result.code == '100'){
+                this.spinShow = false;
+                this.collegeDescribe = result.data.standardContentEnglish
+              } else {
+                this.spinShow = false;
+              }
+            }
+        )
+    },
     // 编辑按钮
     descChanged() {
       this.descEdit = false;
-      this.reDescribe = JSON.parse(JSON.stringify(this.collegeList.collegeDescribe)); // 拷贝一份防止用户取消双相绑定改变
     },
     // 取消编辑
     cancelEdit() {
       this.descEdit = true;
-      this.descTitle = "描述";
-      this.collegeList.collegeDescribe = this.reDescribe; // 用户取消后给数据赋值
     },
     // 提交编辑描述的表单
     submitDesc() {
       this.descEdit = true;
-      this.descTitle = "描述";
-
-      // 编辑描述的
-      this.$post('', {
-        describe: this.collegeList.collegeDescribe,
-        id: this.collegeList.id
-      }).then(res => {
-        msg(this, "success", "编辑成功");
-      });
+      // // 编辑描述的
+      // this.$post('', {
+      //   describe: this.collegeList.collegeDescribe,
+      //   id: this.collegeList.id
+      // }).then(res => {
+      //   msg(this, "success", "编辑成功");
+      // });
     }
+  },
+  mounted(){
+    this.query()
   }
 };
 </script>

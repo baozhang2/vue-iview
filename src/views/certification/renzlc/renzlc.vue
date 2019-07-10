@@ -1,35 +1,58 @@
 <template>
 <!-- 认证流程 -->
     <div id="renzlc" class="container">
-        <div>
-            <div class="mg_t">
-                <div class="line">
-                    <button class="beauty">认证标准</button>
-                    <button class="edit" @click="edit">编辑</button>
+        <div v-show="first">
+            <div>
+                    <div class="mg_t">
+                        <div class="line">
+                            <button class="beauty">认证标准</button>
+                        </div>
+                    </div>
                 </div>
+                <div id="vision" class="container">
+            <!-- tab栏 -->
+                <ul>
+                    <li v-for="(item, index) in visionList" :key="index">
+                        <router-link :to="item.path">{{item.name}}</router-link>
+                    </li>
+                </ul>
+                <!-- 三级路由展示 -->
+                <router-view></router-view>
+            </div>
+            <div class="wendang">
+                <div>
+                    <div class="mg_t">
+                        <div class="line">
+                            <button class="beauty">相关文档</button>
+                            <button class="edit" @click="upload" style="background:rgba(135,184,127,1);">上传</button>
+                        </div>
+                    </div>
+                </div>
+            <Table :columns="columns1" :data="data1">
+                <template slot-scope="{ row }" slot="name">
+                        <strong>{{ row.name }}</strong>
+                </template>
+                <template slot-scope="{ row}" slot="action">
+                    <a style="margin-left:33px" @click="download(row)">下载</a>
+                    <a @click="deleteLable(row)" style="margin-left:20px">删除</a>
+                </template>
+            </Table>
             </div>
         </div>
-        <div id="vision" class="container">
-    <!-- tab栏 -->
-        <ul>
-            <li v-for="(item, index) in visionList" :key="index">
-                <router-link :to="item.path">{{item.name}}</router-link>
-            </li>
-        </ul>
-        <!-- 三级路由展示 -->
-        <router-view></router-view>
-    </div>
-    <div class="wendang">
-        <div>
-            <div class="mg_t">
-                <div class="line">
-                    <button class="beauty">相关文档</button>
-                    <button class="edit" @click="upload" style="background:rgba(135,184,127,1);">上传</button>
-                </div>
+        <div v-show="second" style="width:800px;height:600px;margin:45px auto 0;background-color:#FAFAFA;overflow:hidden">
+            <div style="margin:45px auto 0;width:600px">
+                <span style="color:red">*</span><span>标准名称：</span><Input v-model="value"  style="width: 300px;margin-left:45px" />
+            </div>
+            <div style="margin:45px auto 0;width:600px">
+                <span style="color:red">*</span><span>描述：</span><Input type="textarea"  v-model="value"  style="width: 300px;margin-left:77px" :autosize="{minRows: 6,maxRows: 6}" />
+            </div>
+            <div style="margin:45px auto 0;width:600px">
+                <span style="color:red">*</span><span>文档：</span><Input   v-model="value"  style="width: 300px;margin-left:77px" /><Button type="primary" @click="back" style="margin-left:30px">选择文件</Button>
+            </div>
+            <div style="margin:45px auto 0;width:600px">
+                <Button type="primary" @click="back" style="width:120px;margin-left:100px">取消</Button> <Button type="primary" style="width:120px;margin-left:77px">确定</Button>
             </div>
         </div>
-      <Table :columns="columns1" :data="data1"></Table>
-    </div>
     </div>
 </template>
 <script>
@@ -37,7 +60,10 @@ export default {
     name: "renzlc",
     data () {
         return {
+            value:'',
             sd:'asdasdas',
+            first: true,
+            second: false,
             visionList:[
                 {
                     name:'中文版',
@@ -52,91 +78,54 @@ export default {
                 {
                     title: "文档名称",
                     align: "center",
-                    key: "number"
+                    key: "standards_name"
                 },
                 {
                     title: "描述",
                     width: 428,
                     align: "center",
-                    key: "name"
+                    key: "standards_desc"
                 },
                 {
                 title: "操作",
                 width: 200,
-                align: "center",
-                render: function(h, params) {
-                    return h("span", {}, [
-                    h(
-                        "a",
-                        {
-                        style: {
-                            color: "#00C1DE",
-                            marginRight: "31px"
-                        },
-                        on: {
-                            click: () => {
-                            console.log('params', params)
-                            }
-                        }
-                        },
-                        "下载"
-                    ),
-                    h(
-                        "a",
-                        {
-                        style: {
-                            color: "#00C1DE"
-                        },
-                        on: {
-                            click: () => {
-                            self.$axios
-                                .post("/api/banner/delete", { bannerId: params.row.id })
-                                .then(res => {
-                                if (res.data.code == 100) {
-                                    self.$Message.success({
-                                    content: "删除成功！"
-                                    });
-                                    self.getData();
-                                } else {
-                                    self.$Message.error(res.data.msg);
-                                }
-                                });
-                            }
-                        }
-                        },
-                        "删除"
-                    )
-                    ]);
-                }
+                slot: 'action',
+                align: "center"
             }
         ],
-        data1: [
-        {
-          number: 100021,
-          name: "关于2020年发展及招生计划的会议纪要2019/09/09",
-          upload_date: "2019-09-09",
-          upload_name: "周青玲"
-        },
-        {
-          number: 100021,
-          name: "关于2020年发展及招生计划的会议纪要2019/09/09",
-          upload_date: "2019-09-09",
-          upload_name: "周青玲"
-        },
-        {
-          number: 100021,
-          name: "关于2020年发展及招生计划的会议纪要2019/09/09",
-          upload_date: "2019-09-09",
-          upload_name: "周青玲"
-        }
-      ]
+        data1: []
         }
     },
     methods: {
+        queryList(){
+            this.$post('/certificationStandardsFile/listCertificationStandardsFile', {}).then(
+                result => {
+                    if (result.code == '100'){
+                        result.data = this.data1
+                    }
+                    console.log('result', result)
+                }
+            )
+        },
         edit () {
         },
         upload (e){
+            this.first = false;
+            this.second = true;
+        },
+        downLoad(item){
+             window.location.href = item.uploader;
+        },
+        back(){
+            this.first = true;
+            this.second = false;
+        },
+        deleteLable(row){
+            console.log('row', row);
         }
+    },
+    mounted(){
+        this.queryList();
     }
 }
 </script>

@@ -169,7 +169,27 @@ export default {
   methods: {
     cancel() {
       this.showTable = true;
-    }
+    },
+    submits () {
+        // if (this.details.title && this.details.content) {
+        //   if (this.editId) {
+        //     // 如果有值说明是编辑
+        //     this.copyDetails.forEach(el => {
+        //       if (el.id == this.editId) {
+        //         el.title = this.details.title;
+        //         el.content = this.details.content;
+        //       }
+        //     })
+
+        //     this.detilsList = this.copyDetails
+        //     this.editId = ''
+        //   } else {
+        //     // 如果没值 就是新加
+        //     this.detilsList.push(this.details);
+        //   }
+        //   this.showDetails = true;
+        // }
+      }
   }
 };
 </script>

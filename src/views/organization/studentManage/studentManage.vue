@@ -1,11 +1,10 @@
 <template>
   <div id="studentManage" class="cont_box container">
     <div class="top" v-if="showTable">
-      <button class="file_btn">上传文件</button>
-      <input type="file" class="hide">
-      <div class="add_btn fr clearfix" @click="showTable = false">查询</div>
+      <Button type="primary" @click="lookStuFx">查看学生分析</Button>
+      <div class="add_btn fr clearfix">查询</div>
       <Input class="Inquire fr clearfix" v-model="value" placeholder="请输入关键字" />
-      <span class=" fr clearfix" style="margin-top:27px;">
+      <span class="fr clearfix" style="margin-top:27px;">
         <label>专业：</label>
         <Select v-model="zy" style="width:200px">
           <Option v-for="item in selectList" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -15,30 +14,47 @@
     <!--表格-->
     <div class="tab" v-if="showTable">
       <Table :columns="columns1" :data="data1"></Table>
+      <div class="centers">
+        <Page
+          :total="total"
+          :aria-current="page.page"
+          :page-size="page.pageSize"
+          @on-change="pageChange"
+          show-total
+          v-show="pageIsShow"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { studentList } from "api";
 export default {
   name: "studentManage",
   data() {
     let self = this;
     return {
-      value: '',
-      zy: '',
+      value: "",
+      zy: "",
+      pageIsShow: true,
+      page: {
+        pageSize: 10,
+        page: 1
+      },
+      total: 0,
       selectList: [
         {
-          value: '1',
-          label: '计算机科学'
+          value: "1",
+          label: "计算机科学"
         },
         {
-          value: '2',
-          label: '网络工程'
+          value: "2",
+          label: "网络工程"
         },
         {
-          value: '3',
-          label: '机器人'
+          value: "3",
+          label: "机器人"
         }
       ],
       visionList: [
@@ -55,24 +71,24 @@ export default {
       columns1: [
         {
           title: "编号",
-          align: "center",
-          key: "number"
+          type: "index",
+          align: "center"
         },
         {
           title: "学院",
           align: "center",
-          key: "xueyuan"
+          key: "college"
         },
         {
           title: "专业",
           align: "center",
-          key: "zhuangye",
+          key: "specialty",
           width: 200
         },
         {
           title: "姓名",
           align: "center",
-          key: "name"
+          key: "xingname"
         },
         {
           title: "性别",
@@ -82,18 +98,18 @@ export default {
         {
           title: "状态",
           align: "center",
-          key: "state"
+          key: "schoolStatus"
         },
         {
           title: "创建时间",
           align: "center",
-          key: "create_date"
+          key: "admission_time"
         },
         {
           title: "操作",
           width: 200,
           align: "center",
-          render: function (h, params) {
+          render: function(h, params) {
             return h("span", {}, [
               h(
                 "a",
@@ -117,45 +133,35 @@ export default {
           }
         }
       ],
-      data1: [
-        {
-          number: 100021,
-          xueyuan: '信工院',
-          zhuangye: '软件工程',
-          name: "周青玲",
-          sex: '女',
-          state: "在学",
-          create_date: "2019-09-09"
-        },
-        {
-          number: 100021,
-          xueyuan: '信工院',
-          zhuangye: '软件工程',
-          name: "周青玲",
-          sex: '女',
-          state: "在学",
-          create_date: "2019-09-09"
-        },
-        {
-          number: 100021,
-          xueyuan: '信工院',
-          zhuangye: '软件工程',
-          name: "周青玲",
-          sex: '女',
-          state: "在学",
-          create_date: "2019-09-09"
-        },
-        {
-          number: 100021,
-          xueyuan: '信工院',
-          zhuangye: '软件工程',
-          name: "周青玲",
-          sex: '女',
-          state: "在学",
-          create_date: "2019-09-09"
-        }
-      ]
+      data1: []
     };
+  },
+  methods: {
+    getList() {
+      this.$post(studentList, this.page).then(result => {
+        this.total = result.data.total;
+        result.data.records.forEach(element => {
+          element.xingname = element.xing + element.name;
+        });
+        this.data1 = result.data.records;
+      });
+      this.data1.length == 0
+        ? (this.pageIsShow = false)
+        : (this.pageIsShow = true);
+    },
+    lookStuFx() {
+      this.$router.push({ path: "/organization/studentManage/lookStuFx" });
+    },
+    pageChange(e) {
+      this.page.page = e;
+      this.getList();
+    }
+  },
+  mounted() {
+    this.getList();
+    // 当前sideBar的学院id和专业id，应该是动态的
+    this.page.college_id = "f9c9be314b6846c49acafcf438506b69";
+    this.page.specialty_id = "c12ba3bbda4a4ddda224df04c3c3e0f2";
   }
 };
 </script>
@@ -163,31 +169,15 @@ export default {
 <style lang="stylus" scoped>
 @import '../../../utils/styl/mixin';
 
-.cont_box {
-  ul {
-    margin-top: 37px;
+.tab {
+  .centers {
     display: flex;
-    justify-content: flex-start;
-    border-bottom: 1px solid $navCol;
-    padding-bottom: 1px;
-
-    li {
-      width: 88px;
-      line-height: 30px;
-      text-align: center;
-      cursor: pointer;
-
-      a {
-        width: 100%;
-        display: block;
-        border-top-right-radius: 20px;
-        border: 1px solid $navCol;
-        color: $navCol;
-        font-size: $font14;
-      }
-    }
+    justify-content: center;
+    margin-top: 45px;
   }
+}
 
+.cont_box {
   .router-link-exact-active {
     background-color: $navCol !important;
     color: $white !important;
@@ -200,7 +190,7 @@ export default {
       width: 60px;
       height: 30px;
       line-height: 30px;
-      background-color: #F39800;
+      background-color: #FFB752;
       text-align: center;
       margin: 27px 0 7px 7px;
       font-size: $font14;
@@ -216,23 +206,6 @@ export default {
       margin: 27px 0 7px 7px;
       font-size: $font14;
       color: #999999;
-    }
-
-    .hide {
-      position: relative;
-      right: 90px;
-      opacity: 0;
-      z-index: 50;
-      width: 90px;
-      height: 30px;
-    }
-
-    .file_btn {
-      width: 90px;
-      height: 30px;
-      background-color: #6FB3E0;
-      color: #FFFFFF;
-      margin: 27px 0 7px;
     }
   }
 

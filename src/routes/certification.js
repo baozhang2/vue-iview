@@ -14,8 +14,16 @@ export default {
     children: [
         {
             path: '/certification/outcome',
-            name:'outcome',
+            name:'ceroutcome',
             component: () => import('../views/certification/outcome/outcome.vue'),
+            meta: {
+                title: '认证进度'
+            }
+        },
+        {
+            path: '/certification/certificatioPcess',
+            name:'certificatioPcess',
+            component: () => import('../views/certification/certificatioPcess/certificatioPcess.vue'),
             meta: {
                 title: '认证进度'
             }
@@ -26,7 +34,7 @@ export default {
             redirect:'/certification/renzlc',
             component: () => import('../views/certification/renzlc/renzlc.vue'),
             meta: {
-                title: '认证流程'
+                title: '认证标准'
             },
             children: [
                 {
@@ -44,6 +52,22 @@ export default {
                     }
                 }
             ]
+        },
+        {
+            path: '/certification/crtificationRport',
+            name:'crtificationRport',
+            component: () => import('../views/certification/crtificationRport/crtificationRport.vue'),
+            meta: {
+                title: '认证报告'
+            }
+        },
+        {
+            path: '/certification/frmSmple',
+            name:'frmSmple',
+            component: () => import('../views/certification/frmSmple/frmSmple.vue'),
+            meta: {
+                title: '表格样本'
+            }
         }
     ]
 }

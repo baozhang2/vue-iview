@@ -132,6 +132,9 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    submits () {}
   }
 };
 </script>

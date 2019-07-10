@@ -55,7 +55,9 @@ export default {
           password: this.users.password
         }).then(({ data }) => {
           console.log(data)
-          localStorage.isLogin = true; // 设置登录状态
+          // sessionStorage.setItem('isLogin', true)
+          // sessionStorage.setItem('accessToken', data)
+          localStorage.isLogin = true; // 设置登录状态 因为状态存储在本地下不会消失
           localStorage.accessToken = data; // 设置token
           this.$router.push("/"); // 切换路由
           msg(this, "success", "登录成功!");

@@ -312,6 +312,14 @@
                 title: "查看学生信息"
             }
         },
+        // 查看学生分析
+        {
+            path: '/organization/studentManage/lookStuFx',
+            component: () => import("views/organization/studentManage/lookStuFx.vue"),
+            meta: {
+                title: "查看学生信息"
+            }
+        },
         // 教职管理
         {
             path: '/organization/teacherManage',

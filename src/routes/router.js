@@ -7,6 +7,7 @@ import organization from "./organization";
 import achievements from './achievements'
 import certification from './certification'
 import managementSettings from './managementSettings'
+import userInfo from './userSetting'
 Vue.use(Router);
 
 const router = new Router({
@@ -23,10 +24,21 @@ const router = new Router({
           name: "home",
           component: () => import("views/userPanel/UserPanel.vue")
         },
+        {
+          path: "/notice",
+          name: "notice",
+          component: () => import("views/notice/notice.vue")
+        },
+        {
+          path: "/calendar",
+          name: "calendar",
+          component: () => import("views/calendar/calendar.vue")
+        },
         organization, // 组织机构路由模块
         achievements, // 成果路由模块
         certification, // 认证路由模块
-        managementSettings // 管理模块
+        managementSettings, // 管理模块
+        userInfo // 用户信息
       ]
     },
     {
@@ -56,7 +68,6 @@ router.beforeEach((to, from, next) => {
       return true;
     }
     router.push('/login');
-    alert("请登录！！！");
   }
 });
 

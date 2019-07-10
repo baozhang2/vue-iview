@@ -1,50 +1,117 @@
 <template>
     <div id="outcome" class="container">
-        <div>
+        <div v-show="first">
             <div class="mg_t">
                 <div class="line">
                     <button class="beauty">认证进度</button>
                     <button class="edit" @click="edit">设置</button>
                 </div>
                 <div class="round" >
-                    <div class="rounds1">
-                        <div class="zt">
-                            认证进度
+                    <div>
+                        <div class="rounds1" v-show="showList[0].status == 1">
+                            <div class="zt">
+                                专业建设
+                            </div>
+                            <div class="js"></div>
                         </div>
-                        <div class="js"></div>
-                    </div>
-                    <div class="jian1">
-                    </div>
-                    <div class="rounds1">
-                        <div class="zt">
-                            认证流程
+                        <div class="rounds1" style=" background:#b5b5b5" v-show="showList[0].status == 2">
+                            <div class="zt">
+                                专业建设
+                            </div>
+                            <div class="js"></div>
                         </div>
-                        <div class="cs"></div>
                     </div>
-                    <div class="jian1">
-                    </div>
-                    <div class="rounds1">
-                        <div class="zt">
-                            认证
+                    <div>
+                        <div class="jian" v-show="showList[1].status == 1">
                         </div>
-                        <div class="rz2"></div>
-                    </div>
-                    <div class="jian1">
-                    </div>
-                    <div class="rounds1">
-                        <div class="zt">
-                            现场访问
+                        <div class="jian1" v-show="showList[1].status == 2">
                         </div>
-                        <div class="xcjf"></div>
                     </div>
-                    <div class="jian1">
-                    </div>
-                    <div class="rounds1">
-                        <div class="zt">
-                            通过认证
+                    <div>
+                        <div class="rounds1"  v-show="showList[1].status == 1">
+                            <div class="zt">
+                                认证初审
+                            </div>
+                            <div class="cs"></div>
                         </div>
-                        <div class="tgrz"></div>
+                        <div class="rounds1" style=" background:#b5b5b5"  v-show="showList[1].status == 2">
+                            <div class="zt">
+                                认证初审
+                            </div>
+                            <div class="cs"></div>
+                        </div>
                     </div>
+                    <div>
+                        <div class="jian" v-show="showList[2].status == 1">
+                        </div>
+                        <div class="jian1" v-show="showList[2].status == 2">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="rounds1" v-show="showList[2].status == 1">
+                            <div class="zt">
+                                认证
+                            </div>
+                            <div class="rz2"></div>
+                        </div>
+                        <div class="rounds1" style=" background:#b5b5b5" v-show="showList[2].status == 2">
+                            <div class="zt">
+                                认证
+                            </div>
+                            <div class="rz2"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="jian" v-show="showList[3].status == 1">
+                        </div>
+                        <div class="jian1" v-show="showList[3].status == 2">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="rounds1" v-show="showList[3].status == 1">
+                            <div class="zt">
+                                现场访问
+                            </div>
+                            <div class="xcjf"></div>
+                        </div>
+                        <div class="rounds1" style="background:#b5b5b5" v-show="showList[3].status == 2">
+                            <div class="zt">
+                                现场访问
+                            </div>
+                            <div class="xcjf"></div>
+                        </div>
+                    </div>
+                   <div>
+                        <div class="jian" v-show="showList[4].status == 1">
+                        </div>
+                        <div class="jian1" v-show="showList[4].status == 2">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="rounds1" v-show="showList[4].status == 1">
+                            <div class="zt">
+                                通过认证
+                            </div>
+                            <div class="tgrz"></div>
+                        </div>
+                        <div class="rounds1"  style=" background:#b5b5b5" v-show="showList[4].status == 2">
+                            <div class="zt">
+                                通过认证
+                            </div>
+                            <div class="tgrz"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div v-show="second">
+            <div style="width:80%;margin:45px auto 0">
+                请选择当前认证进度：
+                <Select v-model="model1" style="width:200px">
+                    <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                </Select>
+                <div style="margin-top:45px">
+                    <Button @click="back">取消</Button> <Button type="success" style="margin-left:45px" @click="setting">保存</Button>
                 </div>
             </div>
         </div>
@@ -52,13 +119,104 @@
 </template>
 
 <script>
+import { listCertificationProgress, updateCertificationProgress } from "api";
+import { msg } from "utils/js/utils";
 export default {
     data (){
-        return {}
+        return {
+            showList:[
+                {
+                    "name":"专业建设",
+                    "id":"7db82c5083584152932a9300aeb6eee0",
+                    "status":1
+                },
+                {
+                    "name":"认证初审",
+                    "id":"b1dff13dcd9e4da386987a52efd908aa",
+                    "status":1
+                },
+                {
+                    "name":"通过认证",
+                    "id":"ba2e4d2714b74ff6a40a6615955ed03c",
+                    "status":1
+                },
+                {
+                    "name":"现场访视",
+                    "id":"c489f559680741fcb6b620f604d51a23",
+                    "status":2
+                },
+                {
+                    "name":"认证",
+                    "id":"fca90698b41948b7abe34c24a2aac3d4",
+                    "status":2
+                }
+            ],
+            first: true,
+            second: false,
+            model1: '',
+            cityList: [
+                  {
+                    "label":"专业建设",
+                    "value":"7db82c5083584152932a9300aeb6eee0"
+                },
+                {
+                    "label":"认证初审",
+                    "value":"b1dff13dcd9e4da386987a52efd908aa"
+                },
+                {
+                    "label":"认证",
+                    "value":"ba2e4d2714b74ff6a40a6615955ed03c"
+                },
+                {
+                    "label":"现场访视",
+                    "value":"c489f559680741fcb6b620f604d51a23"
+                },
+                {
+                    "label":"通过认证",
+                    "value":"fca90698b41948b7abe34c24a2aac3d4"
+                }
+            ]
+        }
     },
     methods: {
         edit() {
+            this.first = false;
+            this.second = true
+        },
+         back() {
+            this.first = true;
+            this.second = false
+        },
+        setting(){
+            this.$post(updateCertificationProgress, {
+                "id":this.model1
+            }).then(
+                result => {
+                    if (result.code == '100') {
+                        msg(this, "success", "设置成功");
+                        this.query();
+                     } else {
+                        msg(this, "error", "设置失败");
+                     }
+                }
+            )
+            console.log('model1', this.model1)
+        },
+        query(){
+            this.$post(listCertificationProgress, {}).then(
+                reslut => {
+                    if (reslut.code == '100') {
+                        this.showList = reslut.data;
+                        msg(this, "success", "查询成功");
+                        this.back()
+                    }
+                    console.log('reslut', reslut)
+                }
+            );
         }
+    },
+    mounted(){
+        this.query();
     }
 }
 </script>
@@ -155,7 +313,7 @@ export default {
                     color:rgba(255,255,255,1);
                     line-height:48px;
             .jian
-                margin-top 107px
+                margin 107px 5px 0 5px
                 width 90px
                 height 20px
                 bgImg('../../../assets/img/xz.png', cover)
